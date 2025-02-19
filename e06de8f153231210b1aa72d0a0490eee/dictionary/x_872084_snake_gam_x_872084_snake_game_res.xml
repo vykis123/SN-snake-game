@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="16cd64f953231210b1aa72d0a0490e0d" label="Snake game results" max_length="40" name="x_872084_snake_gam_x_872084_snake_game_res" type="collection">
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
+        <element label="Player" max_length="32" name="player" reference="sys_user" type="reference"/>
+        <element label="Score" max_length="40" name="score" type="integer"/>
+        <index name="index">
+            <element name="player"/>
+        </index>
+        <index name="index2">
+            <element name="sys_class_name"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function ($rootScope) {
+  let c = this;
+  const BLOCK_SIZE = 24;
+  const ROWS = 20;
+  const COLLUMS = 20;
+  let context;
+  let snakeX = BLOCK_SIZE * 5;
+  let snakeY = BLOCK_SIZE * 5;
+  let snakeVelocityX = 0;
+  let snakeVelocityY = 0;
+  let snakeBody = [];
+  let foodX;
+  let foodY;
+  let gameOver = false;
+  let gameScore = 0;
+  const gameBoard = document.getElementById("board");
+  const dialog = document.getElementById("dialog");
+
+  /**Game initial static data */
+  gameBoard.height = ROWS * BLOCK_SIZE;
+  gameBoard.width = COLLUMS * BLOCK_SIZE;
+  context = gameBoard.getContext("2d");
+  shareScoreData();
+
+  placeSnakeFood();
+  document.addEventListener("keyup", changeSnakeDirection);
+  setInterval(game, 1000 / 10);
+
+  function game() {
+    if (gameOver) return;
+
+    /**Cases to when snake reaches end of wall */
+    if (snakeX < 0) {
+      snakeX = gameBoard.width;
+    } else if (snakeX > COLLUMS * BLOCK_SIZE) {
+      snakeX = 0;
+    } else if (snakeY < 0) {
+      snakeY = gameBoard.height;
+    } else if (snakeY > ROWS * BLOCK_SIZE) {
+      snakeY = 0;
+    }
+
+    /**Paint board */
+    context.fillStyle = "#12130f";
+    context.fillRect(0, 0, gameBoard.width, gameBoard.height);
+
+    /**Add food */
+    context.beginPath();
+    context.roundRect(foodX, foodY, BLOCK_SIZE, BLOCK_SIZE, 40);
+    context.fillStyle = "#d21919";
+    context.fill();
+
+    /**Check if snake eats food */
+    checkIfFoodEaten();
+
+    /**Grow snake body */
+    for (let i = snakeBody.length - 1; i > 0; i--) {
+      snakeBody[i] = snakeBody[i - 1];
+    }
+    if (snakeBody.length) {
+      snakeBody[0] = [snakeX, snakeY];
+    }
+
+    /**Control snake movement and placing */
+    placeSnake();
+
+    for (let i = 0; i < snakeBody.length; i++) {
+      context.beginPath();
+      context.roundRect(
+        snakeBody[i][0],
+        snakeBody[i][1],
+        BLOCK_SIZE,
+        BLOCK_SIZE,
+        2
+      );
+      context.fillStyle = "#1db91d";
+      context.fill();
+    }
+
+    /**Game End  */
+    for (let i = 0; i < snakeBody.length; i++) {
+      if (snakeX === snakeBody[i][0] && snakeY === snakeBody[i][1]) {
+        gameOver = true;
+        dialog.showModal();
+      }
+    }
+  }
+
+  function placeSnake() {
+    snakeX += snakeVelocityX * BLOCK_SIZE;
+    snakeY += snakeVelocityY * BLOCK_SIZE;
+
+    context.beginPath();
+    context.roundRect(snakeX, snakeY, BLOCK_SIZE, BLOCK_SIZE, 5);
+    context.fillStyle = "#1db91d";
+    context.fill();
+  }
+
+  function checkIfFoodEaten() {
+    if (foodX === snakeX && foodY === snakeY) {
+      gameScore += 5;
+      shareScoreData();
+      snakeBody.push([foodX, foodY]);
+      placeSnakeFood();
+    }
+  }
+
+  function placeSnakeFood() {
+    foodX = Math.floor(Math.random() * COLLUMS) * BLOCK_SIZE;
+    foodY = Math.floor(Math.random() * ROWS) * BLOCK_SIZE;
+  }
+
+  /**
+   *
+   * @param {KeyboardEvent} event
+   */
+  function changeSnakeDirection(event) {
+    if (event.code === "ArrowUp" && snakeVelocityY !== -1) {
+      snakeVelocityX = 0;
+      snakeVelocityY = -1;
+      return;
+    }
+    if (event.code === "ArrowDown" && snakeVelocityY !== -1) {
+      snakeVelocityX = 0;
+      snakeVelocityY = 1;
+      return;
+    }
+    if (event.code === "ArrowLeft" && snakeVelocityX !== 1) {
+      snakeVelocityX = -1;
+      snakeVelocityY = 0;
+      return;
+    }
+    if (event.code === "ArrowRight" && snakeVelocityX !== -1) {
+      snakeVelocityX = 1;
+      snakeVelocityY = 0;
+      return;
+    }
+  }
+
+  /**
+   * Share data with listening widgets for gameScore update
+   */
+  function shareScoreData() {
+    $rootScope.$broadcast("gameScore", gameScore);
+  }
+
+  function resetGame() {
+    gameScore = 0;
+    snakeVelocityX = 0;
+    snakeVelocityY = 0;
+    snakeBody = [];
+    shareScoreData();
+    placeSnakeFood();
+    placeSnake();
+  }
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.game {&#13;
+  display: grid;&#13;
+  place-items: center;&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>snake_game</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Snake game</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function () {
+  data.currentUser = gs.getUserDisplayName() || "Guest";
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-06 14:21:36</sys_created_on>
+        <sys_id>25e0b8bd53231210b1aa72d0a0490eb5</sys_id>
+        <sys_mod_count>110</sys_mod_count>
+        <sys_name>Snake game</sys_name>
+        <sys_package display_value="Snake Game" source="x_872084_snake_gam">e06de8f153231210b1aa72d0a0490eee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Snake Game">e06de8f153231210b1aa72d0a0490eee</sys_scope>
+        <sys_update_name>sp_widget_25e0b8bd53231210b1aa72d0a0490eb5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-18 13:04:50</sys_updated_on>
+        <template><![CDATA[<div class="game">
+  <canvas id="board"></canvas>
+</div>
+
+<dialog id="dialog">
+  <widget id="snake_game_end_pop"></widget>
+</dialog>
+]]></template>
+    </sp_widget>
+</record_update>
