@@ -2,8 +2,12 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[api.controller = function () {
-  /* widget controller */
   let c = this;
+
+  c.resetOnClick = function () {
+    console.log("sup");
+    $rootScope.$broadcast("gameReset", true);
+  };
 };
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -33,18 +37,19 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-18 12:42:44</sys_created_on>
         <sys_id>e13dcae153f31210b1aa72d0a0490ea1</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>Snake game game over pop up</sys_name>
         <sys_package display_value="Snake Game" source="x_872084_snake_gam">e06de8f153231210b1aa72d0a0490eee</sys_package>
         <sys_policy/>
         <sys_scope display_value="Snake Game">e06de8f153231210b1aa72d0a0490eee</sys_scope>
         <sys_update_name>sp_widget_e13dcae153f31210b1aa72d0a0490ea1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-18 13:11:16</sys_updated_on>
+        <sys_updated_on>2025-02-19 08:16:33</sys_updated_on>
         <template><![CDATA[<div>
   <p>Game Over. Your Score: 555</p>
-  <button id="close-btn">Reset</button>
-</div>]]></template>
+  <button id="close-btn" ng-click="c.resetOnClick()">Reset</button>
+</div>
+]]></template>
     </sp_widget>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>e13dcae153f31210b1aa72d0a0490ea1</id>

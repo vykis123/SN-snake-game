@@ -85,6 +85,7 @@
       if (snakeX === snakeBody[i][0] && snakeY === snakeBody[i][1]) {
         gameOver = true;
         dialog.showModal();
+        insertGameResult(gameScore);
       }
     }
   }
@@ -152,9 +153,40 @@
     snakeVelocityX = 0;
     snakeVelocityY = 0;
     snakeBody = [];
+    gameOver = false;
     shareScoreData();
     placeSnakeFood();
     placeSnake();
+  }
+
+  /**
+   * Reset game when recieve event update from pop widget
+   */
+  $rootScope.$on("gameReset", function (event, data) {
+    resetGame();
+    dialog.close();
+  });
+
+  /**
+   * Insert game result on game end into snake game table
+   *
+   * @param {number} gameResult
+   */
+  function insertGameResult(gameResult) {
+    const serverRequest = {};
+    serverRequest.action = "gameEnd";
+    serverRequest.score = gameResult;
+    c.server
+      .get(serverRequest)
+      .then(function (response) {
+        const { message, status } = response.data.insertResponse;
+
+        if (status === "failed")
+          throw new Error(`Issue inserting record ${message}.`);
+      })
+      .catch((error) => {
+        console.error("Something went wrong with insertGameResult: " + error);
+      });
   }
 };
 ]]></client_script>
@@ -179,6 +211,29 @@
         <roles/>
         <script><![CDATA[(function () {
   data.currentUser = gs.getUserDisplayName() || "Guest";
+  const SNAKE_GAME_TABLE = "x_872084_snake_gam_x_872084_snake_game_res";
+  const GUEST_SYS_ID = "5136503cc611227c0183e96598c4f706";
+
+  if (input && input.action === "gameEnd") {
+    const { score } = input;
+    const snakeGr = new GlideRecord(SNAKE_GAME_TABLE);
+    snakeGr.initialize();
+    snakeGr.setValue("player", gs.getUserID() || GUEST_SYS_ID);
+    snakeGr.setValue("score", score);
+    const recordSySid = snakeGr.insert();
+
+    if (!recordSySid) {
+      return (data.insertResponse = {
+        status: "failed",
+        message: "Record was not created",
+      });
+    }
+
+    return (data.insertResponse = {
+      status: "success",
+      message: `Record was created ${recordSySid}`,
+    });
+  }
 })();
 ]]></script>
         <servicenow>false</servicenow>
@@ -186,14 +241,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-06 14:21:36</sys_created_on>
         <sys_id>25e0b8bd53231210b1aa72d0a0490eb5</sys_id>
-        <sys_mod_count>110</sys_mod_count>
+        <sys_mod_count>117</sys_mod_count>
         <sys_name>Snake game</sys_name>
         <sys_package display_value="Snake Game" source="x_872084_snake_gam">e06de8f153231210b1aa72d0a0490eee</sys_package>
         <sys_policy/>
         <sys_scope display_value="Snake Game">e06de8f153231210b1aa72d0a0490eee</sys_scope>
         <sys_update_name>sp_widget_25e0b8bd53231210b1aa72d0a0490eb5</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-18 13:04:50</sys_updated_on>
+        <sys_updated_on>2025-02-19 12:41:25</sys_updated_on>
         <template><![CDATA[<div class="game">
   <canvas id="board"></canvas>
 </div>
