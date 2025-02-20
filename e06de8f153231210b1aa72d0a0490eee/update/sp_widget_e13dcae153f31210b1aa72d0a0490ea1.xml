@@ -4,14 +4,49 @@
         <client_script><![CDATA[api.controller = function () {
   let c = this;
 
+  c.gameScore = 0;
+
+  /**
+   * Listen from game about game score and update dom
+   */
+  $rootScope.$on("gameScore", function (event, data) {
+    c.gameScore = data;
+  });
+
+  /**
+   * Send signal to reset game
+   */
   c.resetOnClick = function () {
-    console.log("sup");
     $rootScope.$broadcast("gameReset", true);
   };
 };
 ]]></client_script>
         <controller_as>c</controller_as>
-        <css/>
+        <css>.heading {&#13;
+  font-size: clamp(1.75rem, 2.5vw, 2rem);&#13;
+  color: #2d2d2a;&#13;
+  text-shadow: 0 0 0.5rem #3c9d3c;&#13;
+}&#13;
+&#13;
+.btn-reset {&#13;
+  cursor: pointer;&#13;
+  min-width: 100%;&#13;
+  margin: auto;&#13;
+  padding: 0.5rem;&#13;
+  font-size: clamp(1.75rem, 2.5vw, 2rem);&#13;
+  letter-spacing: 2px;&#13;
+  border-radius: 1rem;&#13;
+  border: none;&#13;
+  background: transparent;&#13;
+  box-shadow: 0 0 0 1px #2d2d2a;&#13;
+  transition: all 0.15s ease-in;&#13;
+  &amp;:hover,&#13;
+  &amp;:focus-visible {&#13;
+    box-shadow: 0 0 0 1px black, inset 0 0 1rem black;&#13;
+    letter-spacing: 5px;&#13;
+  }&#13;
+}&#13;
+</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -27,28 +62,27 @@
         <option_schema/>
         <public>false</public>
         <roles/>
-        <script><![CDATA[(function() {
-  /* populate the 'data' object */
-  /* e.g., data.table = $sp.getValue('table'); */
-
-})();]]></script>
+        <script><![CDATA[(function () {
+  console.log(data);
+})();
+]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-18 12:42:44</sys_created_on>
         <sys_id>e13dcae153f31210b1aa72d0a0490ea1</sys_id>
-        <sys_mod_count>8</sys_mod_count>
+        <sys_mod_count>39</sys_mod_count>
         <sys_name>Snake game game over pop up</sys_name>
         <sys_package display_value="Snake Game" source="x_872084_snake_gam">e06de8f153231210b1aa72d0a0490eee</sys_package>
         <sys_policy/>
         <sys_scope display_value="Snake Game">e06de8f153231210b1aa72d0a0490eee</sys_scope>
         <sys_update_name>sp_widget_e13dcae153f31210b1aa72d0a0490ea1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-19 08:16:33</sys_updated_on>
-        <template><![CDATA[<div>
-  <p>Game Over. Your Score: 555</p>
-  <button id="close-btn" ng-click="c.resetOnClick()">Reset</button>
-</div>
+        <sys_updated_on>2025-02-20 13:23:45</sys_updated_on>
+        <template><![CDATA[<h4 class="heading">Game Over. Your Score: {{c.gameScore}}</h4>
+<button class="btn-reset" id="close-btn" ng-click="c.resetOnClick()">
+  Reset
+</button>
 ]]></template>
     </sp_widget>
     <sys_es_latest_script action="INSERT_OR_UPDATE">

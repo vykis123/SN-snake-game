@@ -24,7 +24,6 @@
   gameBoard.width = COLLUMS * BLOCK_SIZE;
   context = gameBoard.getContext("2d");
   shareScoreData();
-
   placeSnakeFood();
   document.addEventListener("keyup", changeSnakeDirection);
   setInterval(game, 1000 / 10);
@@ -195,6 +194,41 @@
   display: grid;&#13;
   place-items: center;&#13;
 }&#13;
+&#13;
+dialog {&#13;
+  display: none;&#13;
+  opacity: 0;&#13;
+  margin: auto;&#13;
+  border: none;&#13;
+  padding: 1rem 2rem;&#13;
+  border-radius: 1rem;&#13;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.712);&#13;
+  background: linear-gradient(90deg, #87ec87, #1db91d);&#13;
+&#13;
+  /*Works in 75% browsers*/&#13;
+  translate: 0 25vh;&#13;
+  transition-property: overlay display opacity;&#13;
+  transition-duration: 0.5s;&#13;
+  transition-behavior: allow-discrete;&#13;
+&#13;
+  &amp;[open] {&#13;
+    opacity: 1;&#13;
+    display: block;&#13;
+    translate: 0 0;&#13;
+&#13;
+    //   /*Works in 75% browsers*/&#13;
+    @starting-style {&#13;
+      opacity: 0;&#13;
+      translate: 0 -25vh;&#13;
+    }&#13;
+&#13;
+    &amp;::backdrop {&#13;
+      background: rgba(30, 75, 28, 0.226);&#13;
+      backdrop-filter: blur(0.5rem);&#13;
+      -webkit-backdrop-filter: blur(0.5rem);&#13;
+    }&#13;
+  }&#13;
+}&#13;
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -241,21 +275,20 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-06 14:21:36</sys_created_on>
         <sys_id>25e0b8bd53231210b1aa72d0a0490eb5</sys_id>
-        <sys_mod_count>117</sys_mod_count>
+        <sys_mod_count>162</sys_mod_count>
         <sys_name>Snake game</sys_name>
         <sys_package display_value="Snake Game" source="x_872084_snake_gam">e06de8f153231210b1aa72d0a0490eee</sys_package>
         <sys_policy/>
         <sys_scope display_value="Snake Game">e06de8f153231210b1aa72d0a0490eee</sys_scope>
         <sys_update_name>sp_widget_25e0b8bd53231210b1aa72d0a0490eb5</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-19 12:41:25</sys_updated_on>
+        <sys_updated_on>2025-02-20 13:20:21</sys_updated_on>
         <template><![CDATA[<div class="game">
+  <dialog id="dialog">
+    <widget id="snake_game_end_pop"></widget>
+  </dialog>
   <canvas id="board"></canvas>
 </div>
-
-<dialog id="dialog">
-  <widget id="snake_game_end_pop"></widget>
-</dialog>
 ]]></template>
     </sp_widget>
 </record_update>

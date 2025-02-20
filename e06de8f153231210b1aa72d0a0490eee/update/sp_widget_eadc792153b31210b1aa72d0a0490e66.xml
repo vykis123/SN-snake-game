@@ -19,30 +19,27 @@
   });
 };]]></client_script>
         <controller_as>c</controller_as>
-        <css>@import url("https://fonts.googleapis.com/css2?family=Grechen+Fuemen&amp;display=swap");&#13;
-&#13;
-.nav {&#13;
-  text-align: center;&#13;
-&#13;
-  .heading,&#13;
-  .heading-score {&#13;
-    font-family: "Grechen Fuemen", serif;&#13;
-    background: -webkit-linear-gradient(&#13;
-      90deg,&#13;
-      rgb(135, 236, 135),&#13;
-      rgb(29, 185, 29)&#13;
-    );&#13;
-    -webkit-background-clip: text;&#13;
-    -webkit-text-fill-color: transparent;&#13;
-  }&#13;
-  .heading {&#13;
-    font-size: clamp(3rem, 2.5vw, 5rem);&#13;
-  }&#13;
-&#13;
-  .heading-score {&#13;
-    font-size: clamp(2rem, 2.5vw, 3rem);&#13;
-  }&#13;
-}&#13;
+        <css>.nav {
+  text-align: center;
+
+  .heading,
+  .heading-score {
+    background: -webkit-linear-gradient(
+      90deg,
+      rgb(135, 236, 135),
+      rgb(29, 185, 29)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .heading {
+    font-size: clamp(3rem, 2.5vw, 5rem);
+  }
+
+  .heading-score {
+    font-size: clamp(2rem, 2.5vw, 3rem);
+  }
+}
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -68,14 +65,14 @@ data.currentUser = gs.getUserDisplayName() || "Guest";
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-18 11:31:40</sys_created_on>
         <sys_id>eadc792153b31210b1aa72d0a0490e66</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>20</sys_mod_count>
         <sys_name>Snake Game header</sys_name>
         <sys_package display_value="Snake Game" source="x_872084_snake_gam">e06de8f153231210b1aa72d0a0490eee</sys_package>
         <sys_policy/>
         <sys_scope display_value="Snake Game">e06de8f153231210b1aa72d0a0490eee</sys_scope>
         <sys_update_name>sp_widget_eadc792153b31210b1aa72d0a0490e66</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-18 12:51:21</sys_updated_on>
+        <sys_updated_on>2025-02-20 13:25:01</sys_updated_on>
         <template><![CDATA[<nav class="nav">
   <h1 class="heading">Hello, {{data.currentUser}}</h1>
   <h3 class="heading-score">Score: 0</h3>
