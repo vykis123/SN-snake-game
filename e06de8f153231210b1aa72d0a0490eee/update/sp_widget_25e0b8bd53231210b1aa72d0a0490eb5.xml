@@ -28,6 +28,11 @@
   document.addEventListener("keyup", changeSnakeDirection);
   setInterval(game, 1000 / 10);
 
+  /**
+   * Reset game when game over, pop up is visible and user clicks ECP to close modal
+   */
+  document.addEventListener("keyup", handleEscClick);
+
   function game() {
     if (gameOver) return;
 
@@ -187,6 +192,18 @@
         console.error("Something went wrong with insertGameResult: " + error);
       });
   }
+
+  /**
+   *@param {KeyboardEvent} event
+   */
+  function handleEscClick(event) {
+    if (event.key === "Escape" && gameOver) {
+      resetGame();
+      dialog.close();
+
+      document.removeEventListener("click", handleEscClick);
+    }
+  }
 };
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -275,14 +292,14 @@ dialog {&#13;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-06 14:21:36</sys_created_on>
         <sys_id>25e0b8bd53231210b1aa72d0a0490eb5</sys_id>
-        <sys_mod_count>162</sys_mod_count>
+        <sys_mod_count>169</sys_mod_count>
         <sys_name>Snake game</sys_name>
         <sys_package display_value="Snake Game" source="x_872084_snake_gam">e06de8f153231210b1aa72d0a0490eee</sys_package>
         <sys_policy/>
         <sys_scope display_value="Snake Game">e06de8f153231210b1aa72d0a0490eee</sys_scope>
         <sys_update_name>sp_widget_25e0b8bd53231210b1aa72d0a0490eb5</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-20 13:20:21</sys_updated_on>
+        <sys_updated_on>2025-02-21 09:17:24</sys_updated_on>
         <template><![CDATA[<div class="game">
   <dialog id="dialog">
     <widget id="snake_game_end_pop"></widget>

@@ -62,23 +62,21 @@
         <option_schema/>
         <public>false</public>
         <roles/>
-        <script><![CDATA[(function () {
-  console.log(data);
-})();
+        <script><![CDATA[(function () {})();
 ]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-18 12:42:44</sys_created_on>
         <sys_id>e13dcae153f31210b1aa72d0a0490ea1</sys_id>
-        <sys_mod_count>39</sys_mod_count>
+        <sys_mod_count>40</sys_mod_count>
         <sys_name>Snake game game over pop up</sys_name>
         <sys_package display_value="Snake Game" source="x_872084_snake_gam">e06de8f153231210b1aa72d0a0490eee</sys_package>
         <sys_policy/>
         <sys_scope display_value="Snake Game">e06de8f153231210b1aa72d0a0490eee</sys_scope>
         <sys_update_name>sp_widget_e13dcae153f31210b1aa72d0a0490ea1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-20 13:23:45</sys_updated_on>
+        <sys_updated_on>2025-02-21 09:20:35</sys_updated_on>
         <template><![CDATA[<h4 class="heading">Game Over. Your Score: {{c.gameScore}}</h4>
 <button class="btn-reset" id="close-btn" ng-click="c.resetOnClick()">
   Reset
