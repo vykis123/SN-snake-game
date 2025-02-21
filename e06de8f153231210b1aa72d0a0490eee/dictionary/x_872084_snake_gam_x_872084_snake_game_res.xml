@@ -2,7 +2,7 @@
     <element db_object_id="16cd64f953231210b1aa72d0a0490e0d" label="Snake game results" max_length="40" name="x_872084_snake_gam_x_872084_snake_game_res" type="collection">
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" read_only="true" type="string"/>
         <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
-        <element label="Player" mandatory="true" max_length="32" name="player" reference="sys_user" type="reference"/>
+        <element default="javascript:gs.getUserID();" dynamic_default_value="90d1921e5f510100a9ad2572f2b477fe" label="Player" mandatory="true" max_length="32" name="player" reference="sys_user" type="reference" use_dynamic_default="true"/>
         <element label="Score" mandatory="true" max_length="40" name="score" type="integer"/>
         <index name="index">
             <element name="player"/>
